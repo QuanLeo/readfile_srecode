@@ -92,21 +92,27 @@ checkword(int count,char s[100],int err){
 	return err;
 }
 
-data checkadd(int count,char s[100],data *t){
+checkadd(int count,char s[100],data *t,int temp){
 	int l=0;
 	for(int i=0;i<100;i++){
 		if(s[i]=='\n'){
 			l = i;	
 		}
 	}
-	if(s[1]=='0' || s[1]=='1' || s[1]=='9' ||s[1]=='5'){
+	if(s[1]=='0' || s[1]=='1' || s[1]=='9'){
 		t->x = 4;				//16 bit
+		temp = t->x;
 	}
 	else if(s[1]=='2' || s[1]=='8'){
 		t->x = 6;			//24 bit
+		temp = t->x;
 	}
-	else{
+	else if(s[1]=='3' || s[1]=='7'){
 		t->x = 8;			//32 bit
+		temp = t->x;
+	}
+	else {
+		t->x = temp;
 	}
 	for(int i=0;i<l-4;i++){
 		if(i<t->x){
@@ -117,9 +123,11 @@ data checkadd(int count,char s[100],data *t){
 		}
 	}
 
+	return temp;
+
 }
 
-save(int count,char s[100],int err){
+save(int count,char s[100],int err,int temp){
 	int l=0;
 	data *t;
 	t = (data *)calloc(1,sizeof(data));
@@ -127,24 +135,26 @@ save(int count,char s[100],int err){
 //		cout<<"err = "<<err<<endl;
 	}
 	else{
-		checkadd(count,s,t);
+		temp = checkadd(count,s,t,temp);
 		cout<<" writing..."<<endl;
 		fstream f;
 		f.open("write_srecord.txt",ios ::app);
-//		f.open("write_freg.txt",ios ::app);8
+//		f.open("write_freg.txt",ios ::app);
 		f<<t->add <<" <------- "<<t->data;	//ghi temp vao f
 		f<<endl;
 		f.close();
-	}	
+	}
+
+	return temp;	
 }
 
-process(char s[100],int count,int err){
+process(char s[100],int count,int err,int temp){
 	char s1 = s[0],s2 = s[1];
 	if(s1=='S' ){			//ki tu dau la S
 		err+=checkword(count,s,err);
 		err+=checksum(count,s,err);
 		err+=bytecount(count,s,err);
-		save(count,s,err);
+		temp = save(count,s,err,temp);
 
 	}
 	else if(s[0]!=0){
@@ -156,6 +166,7 @@ process(char s[100],int count,int err){
 		cout<<endl;	
 	}
 
+	return temp;
 }
 
 
@@ -163,6 +174,7 @@ int main(int argc, char** argv) {
 	FILE *fp;
 	int count=0;
 	int err = 0;
+	int temp = 0;
 	char str[100];
 //	fp = fopen("freg","r");
 	fp = fopen("srecord_example","r");
@@ -178,8 +190,7 @@ int main(int argc, char** argv) {
 		char *s;
 		fgets(str,100,fp);	//copy tung dong vao trong mang str
 		count +=1;
-
-		process(str,count,err);
+		temp = process(str,count,err,temp);
 	}
 	cout<<"\ndone"<<endl;
 	
