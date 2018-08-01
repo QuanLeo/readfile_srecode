@@ -151,10 +151,17 @@ save(int count,char s[100],int err,int temp){
 process(char s[100],int count,int err,int temp){
 	char s1 = s[0],s2 = s[1];
 	if(s1=='S' ){			//ki tu dau la S
-		err+=checkword(count,s,err);
-		err+=checksum(count,s,err);
-		err+=bytecount(count,s,err);
-		temp = save(count,s,err,temp);
+		if(s[1]<'0' || s[1]>'9'){
+			cout<<" loi vi tri dem byte dong "<<count<<endl;
+			puts(s);
+		}
+		else{
+			err+=checkword(count,s,err);
+			err+=checksum(count,s,err);
+			err+=bytecount(count,s,err);
+			temp = save(count,s,err,temp);
+		}
+		
 
 	}
 	else if(s[0]!=0){
