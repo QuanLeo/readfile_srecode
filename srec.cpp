@@ -152,7 +152,7 @@ process(char s[100],int count,int err,int temp){
 	char s1 = s[0],s2 = s[1];
 	if(s1=='S' ){			//ki tu dau la S
 		if(s[1]<'0' || s[1]>'9'){
-			cout<<" loi vi tri dem byte dong "<<count<<endl;
+			cout<<" ki tu sau S k hop le dong "<<count<<endl;
 			puts(s);
 		}
 		else{
