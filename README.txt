@@ -1,7 +1,8 @@
 	Yêu cầu của đề bài là đọc file dang Srecord (SREC)
 	viết chương trình parse file srecord :
 		+ Kiểm tra file, in ra thông báo lỗi nếu có
-		+ Nếu không có bất kỳ lỗi nào thì xuất ra dữ liệu đã được parse, bao gồm: địa chỉ, dữ liệu. Dữ liệu xuất ra ghi vào một file khác.
+		+ Nếu không có bất kỳ lỗi nào thì xuất ra dữ liệu đã được parse, bao gồm: địa chỉ, dữ liệu
+		+ Dữ liệu xuất ra ghi vào một file khác.
 		+ Hai file ví dụ ở trong attachment.
 
 	Ý tưởng của tôi :
